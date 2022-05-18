@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sprites/background.png" type="Texture" id=2]
 
 [node name="Main" type="Node"]
 
@@ -17,3 +18,12 @@ wait_time = 2.0
 
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 240, 450 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 738, 1312 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 2 )
+centered = false
