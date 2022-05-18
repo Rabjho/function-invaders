@@ -1,8 +1,12 @@
 extends Node
 
-
+export(int) var speed: int = 1000
 export(PackedScene) var asteroid_scene
 var score
+
+var direction = Vector2(0, 1)
+
+onready var parallax = $ParallaxBackground
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +18,8 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func _process(delta):
+	parallax.scroll_offset += direction * speed * delta
 
 func _on_Player_Hit():
 	pass # Replace with function body.

@@ -31,7 +31,6 @@ position = Vector2( 960, 320 )
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-visible = false
 motion_mirroring = Vector2( 738, 1312 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
@@ -45,7 +44,6 @@ curve = SubResource( 1 )
 position = Vector2( 1024, 0 )
 rotation = 3.14159
 
-[connection signal="Hit" from="Player" to="." method="_on_Player_Hit"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
