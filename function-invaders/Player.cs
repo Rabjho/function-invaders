@@ -4,6 +4,10 @@ using System;
 public class Player : Area2D
 {
 	
+	[Signal]
+	public delegate void Hit();
+
+
 	[Export]
 	public int Speed = 400; // How fast the player will move (pixels/sec).
 
@@ -13,6 +17,7 @@ public class Player : Area2D
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
+		Hide();
 	}
 
  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,6 +47,16 @@ public class Player : Area2D
 		animatedSprite.Stop();
 	}
 
+	if (velocity.y != 0)
+	{
+		animatedSprite.Animation = "default";
+		animatedSprite.FlipV = velocity.y > 0;
+	} else {
+		animatedSprite.Frame = 0;
+	}
+
+
+
 	Position += velocity * delta;
 	Position = new Vector2(
 		x: Mathf.Clamp(Position.x, 0, ScreenSize.x),
@@ -49,4 +64,22 @@ public class Player : Area2D
 	);
 
  }
+
+
+
+private void _on_Player_body_entered(object body)
+{
+	Hide(); // Player disappears after being hit.
+	EmitSignal(nameof(Hit));
+	// Must be deferred as we can't change physics properties on a physics callback.
+	GetNode<CollisionShape2D>("CollisionPolygon2D").SetDeferred("disabled", true);
+	// Replace with function body.
+}
+
+public void Start(Vector2 pos)
+{
+	Position = pos;
+	Show();
+	GetNode<CollisionShape2D>("CollisionPolygon2D").Disabled = false;
+}
 }
