@@ -12,12 +12,15 @@ public class Player : Area2D
 	public int Speed = 400; // How fast the player will move (pixels/sec).
 
 	public Vector2 ScreenSize; // Size of the game window.
+	private AnimatedSprite animatedSprite;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
 		Hide();
+		animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+		animatedSprite.Rotate(-Mathf.Pi / 2);
 	}
 
  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,24 +38,10 @@ public class Player : Area2D
 		velocity.y -= 1;
 	}
 
-	var animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
 
 	if (velocity.Length() > 0)
 	{
 		velocity = velocity.Normalized() * Speed;
-		animatedSprite.Play();
-	}
-	else
-	{
-		animatedSprite.Stop();
-	}
-
-	if (velocity.y != 0)
-	{
-		animatedSprite.Animation = "default";
-		animatedSprite.FlipV = velocity.y > 0;
-	} else {
-		animatedSprite.Frame = 0;
 	}
 
 
@@ -73,7 +62,6 @@ private void _on_Player_body_entered(object body)
 	EmitSignal(nameof(Hit));
 	// Must be deferred as we can't change physics properties on a physics callback.
 	GetNode<CollisionPolygon2D>("CollisionPolygon2D").SetDeferred("disabled", true);
-	// Replace with function body.
 }
 
 public void start(Vector2 pos)
