@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/onelife.wav-f463b144c2cce153ccf2827a953b3609.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Music/Abstraction/onelife.wav"
+dest_files=[ "res://.import/onelife.wav-f463b144c2cce153ccf2827a953b3609.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

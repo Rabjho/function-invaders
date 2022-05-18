@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/threelives.wav-53c48f7f7d23149a25744c74b458342f.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Music/Abstraction/threelives.wav"
+dest_files=[ "res://.import/threelives.wav-53c48f7f7d23149a25744c74b458342f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

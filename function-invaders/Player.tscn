@@ -60,3 +60,5 @@ animation = "quad"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 0, -25, 25, 25, -25, 25 )
+
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
