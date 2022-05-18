@@ -35,19 +35,17 @@ animations = [ {
 radius = 36.0555
 
 [node name="RigidBody2D" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 287, 226 )
 scale = Vector2( 0.75, 0.75 )
 frames = SubResource( 9 )
 animation = "asteroids"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 287, 226 )
 shape = SubResource( 10 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( 287, 226 )
-
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+scale = Vector2( 0, 0 )

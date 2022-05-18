@@ -72,14 +72,14 @@ private void _on_Player_body_entered(object body)
 	Hide(); // Player disappears after being hit.
 	EmitSignal(nameof(Hit));
 	// Must be deferred as we can't change physics properties on a physics callback.
-	GetNode<CollisionShape2D>("CollisionPolygon2D").SetDeferred("disabled", true);
+	GetNode<CollisionPolygon2D>("CollisionPolygon2D").SetDeferred("disabled", true);
 	// Replace with function body.
 }
 
-public void Start(Vector2 pos)
+public void start(Vector2 pos)
 {
 	Position = pos;
 	Show();
-	GetNode<CollisionShape2D>("CollisionPolygon2D").Disabled = false;
+	GetNode<CollisionPolygon2D>("CollisionPolygon2D").Disabled = false;
 }
 }

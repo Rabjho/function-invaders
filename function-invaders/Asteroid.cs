@@ -7,7 +7,6 @@ public class Asteroid : Node2D
 	public override void _Ready()
 	{
 		var animSprite = GetNode<AnimatedSprite>("AnimatedSprite");
-		animSprite.Playing = true;
 		animSprite.Frame = (int)GD.Randi() % animSprite.Frames.GetFrameCount(animSprite.Animation);
 	}
 
@@ -16,10 +15,6 @@ public class Asteroid : Node2D
 //  {
 //      
 //  }
-private void _on_VisibilityNotifier2D_screen_exited()
-{
-	QueueFree();
+
 }
-}
-s
 
