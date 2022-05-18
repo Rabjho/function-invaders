@@ -4,6 +4,10 @@ using System;
 public class Player : Area2D
 {
 	
+	[Signal]
+	public delegate void Hit();
+
+
 	[Export]
 	public int Speed = 400; // How fast the player will move (pixels/sec).
 
@@ -13,6 +17,7 @@ public class Player : Area2D
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
+		Hide();
 	}
 
  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,6 +46,16 @@ public class Player : Area2D
 	{
 		animatedSprite.Stop();
 	}
+
+	if (velocity.y != 0)
+	{
+		animatedSprite.Animation = "default";
+		animatedSprite.FlipV = velocity.y > 0;
+	} else {
+		animatedSprite.Frame = 0;
+	}
+
+
 
 	Position += velocity * delta;
 	Position = new Vector2(
