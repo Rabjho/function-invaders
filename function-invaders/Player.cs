@@ -64,9 +64,10 @@ private void _on_Player_body_entered(object body)
 	GetNode<CollisionPolygon2D>("CollisionPolygon2D").SetDeferred("disabled", true);
 }
 
-public void start(Vector2 pos)
+public void start()
 {
-	Position = pos;
+	ScreenSize = GetViewportRect().Size;
+	Position = new Vector2(ScreenSize.x * 9/10, ScreenSize.y / 2);
 	Show();
 	GetNode<CollisionPolygon2D>("CollisionPolygon2D").Disabled = false;
 }

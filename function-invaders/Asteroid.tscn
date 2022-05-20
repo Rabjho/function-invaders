@@ -48,4 +48,4 @@ animation = "asteroids"
 shape = SubResource( 10 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-scale = Vector2( 0, 0 )
+scale = Vector2( 1e-05, 1e-05 )
