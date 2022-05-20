@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Fonts/Kenney Mini Square.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/MenuHUD.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.180392, 0.180392, 0.180392, 0.596078 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.435294, 0.435294, 0.435294, 0.721569 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[node name="MenuHUD" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="TitleLabel" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+margin_bottom = 81.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Function Invaders[/center]"
+text = "Function Invaders"
+fit_content_height = true
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -218.0
+margin_top = -34.5
+margin_right = 218.0
+margin_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+hint_tooltip = "Press me to start the game"
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/normal = SubResource( 3 )
+button_mask = 7
+text = "Start the game"
+clip_text = true
+
+[node name="StartMessage" type="RichTextLabel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -134.0
+margin_top = -32.0
+margin_right = 134.0
+margin_bottom = 32.0
+text = "Get ready"
+fit_content_height = true
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]

@@ -21,6 +21,10 @@ window/size/height=1080
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 
+[gui]
+
+theme/custom_font="res://Assets/Fonts/defualtText.tres"
+
 [input]
 
 move_up={
