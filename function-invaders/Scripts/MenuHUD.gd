@@ -23,9 +23,15 @@ func start_message(text):
 	$StartTimer.start()
 	$TitleLabel.hide()
 
+func update_score(score):
+	$ScoreLabel.text = "SCORE: " + str(score)
+
 
 func _on_StartTimer_timeout():
 	$StartMessage.hide()
+	$ScoreLabel.show()
+	$FunctionLabel.show()
+	$LivesLabel.show()
 	
 
 

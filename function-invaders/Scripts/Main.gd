@@ -26,30 +26,22 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _on_Player_Hit():
-	pass # Replace with function body.
-
 func new_game():
 	score = 0
 	lives = 3
 	$Player.start()
 	$StartTimer.start()
-	$MenuHUD.start_message("Get Ready")
+	$HUD.start_message("Get Ready")
 	$MusicController.stream = three_lives
 	$MusicController.play()
 
 func _on_AsteroidTimer_timeout():
-	# Create a new instance of the Mob scene.
-	#var asteroid = asteroid_scene.instance()
-	#i += 1
-#	asteroid.position = Vector2(i * 20, 20)
-	# Spawn the mob by adding it to the Main scene.
 	add_child(asteroid_scene.instance())
 
-func _on_ScoreTimer_timeout():
-	score += 1
 
 func _on_StartTimer_timeout():
 	$AsteroidTimer.start()
-	$ScoreTimer.start()
 
+func _on_Player_hit():
+	lives -= 1
+	pass # Replace with function body.

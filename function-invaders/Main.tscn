@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/Asteroid.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/MenuHUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Sounds/Music/Dystopian/gameoverscreen.wav" type="AudioStream" id=6]
 [ext_resource path="res://Assets/Sounds/Music/Abstraction/threelives.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/Sounds/Music/Abstraction/twolives.wav" type="AudioStream" id=8]
@@ -34,9 +34,6 @@ current = true
 [node name="AsteroidTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="ScoreTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 
@@ -48,7 +45,7 @@ curve = SubResource( 1 )
 position = Vector2( 1024, 0 )
 rotation = 3.14159
 
-[node name="MenuHUD" parent="." instance=ExtResource( 5 )]
+[node name="HUD" parent="." instance=ExtResource( 5 )]
 
 [node name="MusicController" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
@@ -56,6 +53,7 @@ autoplay = true
 
 [node name="Background" parent="." instance=ExtResource( 2 )]
 
+[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
-[connection signal="start_game" from="MenuHUD" to="." method="new_game"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
