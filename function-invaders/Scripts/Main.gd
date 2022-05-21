@@ -16,16 +16,6 @@ var lives
 func _ready():
 	randomize()
 
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-#func _process(delta):
-#	pass
-
 func new_game():
 	score = 0
 	lives = 3
@@ -44,4 +34,10 @@ func _on_StartTimer_timeout():
 
 func _on_Player_hit():
 	lives -= 1
+	if (lives == 2):
+		$MusicController.stream = two_lives
+		$MusicController.play()
+	elif (lives == 1):
+		$MusicController.stream = one_life
+		$MusicController.play()
 	pass # Replace with function body.
