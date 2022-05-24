@@ -24,6 +24,8 @@ func new_game():
 	$HUD.start_message("Get Ready")
 	$MusicController.stream = three_lives
 	$MusicController.play()
+	$HUD.update_lives(lives)
+
 
 func _on_AsteroidTimer_timeout():
 	add_child(asteroid_scene.instance())
@@ -34,10 +36,14 @@ func _on_StartTimer_timeout():
 
 func _on_Player_hit():
 	lives -= 1
-	if (lives == 2):
+	if (lives == 0):
+		pass
+	elif (lives == 2):
 		$MusicController.stream = two_lives
 		$MusicController.play()
 	elif (lives == 1):
 		$MusicController.stream = one_life
 		$MusicController.play()
-	pass # Replace with function body.
+	
+	$HUD.update_lives(lives)
+
