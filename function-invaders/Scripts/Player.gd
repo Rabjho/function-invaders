@@ -1,5 +1,7 @@
 extends Area2D
 
+export(PackedScene) var bullet_scene
+
 export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 
@@ -31,6 +33,12 @@ func _process(delta):
 		
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
+
+func _input(event):
+	if (Input.is_action_just_pressed("shoot_bullet") and $ShootCooldown.time_left == 0):
+		$ShootCooldown.start()
+		add_child(bullet_scene.instance())
+
 
 func start():
 	position = Vector2(screen_size.x * 9/10, screen_size.y / 2);

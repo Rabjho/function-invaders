@@ -66,4 +66,7 @@ polygon = PoolVector2Array( 0, -40, 40, 40, -40, 40 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="ShootCooldown" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
