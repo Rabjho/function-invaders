@@ -7,7 +7,7 @@
 script = ExtResource( 2 )
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2( 1968, 1107 )
+motion_mirroring = Vector2( 1920, 1080 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxLayer"]
 modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
