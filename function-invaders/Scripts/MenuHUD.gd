@@ -29,9 +29,15 @@ func update_score(score):
 func update_type(type):
 	$FunctionLabel.text = "Latest type: " + str(type)
 
-
 func update_lives(lives):
 	$LivesLabel.text = "LIVES: " + str(lives)
+
+func game_over(score):
+	$FunctionLabel.hide()
+	$ScoreLabel.hide()
+	$LivesLabel.hide()
+
+
 
 func _on_StartTimer_timeout():
 	$StartMessage.hide()

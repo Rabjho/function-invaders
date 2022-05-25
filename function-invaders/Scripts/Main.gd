@@ -3,15 +3,16 @@ extends Node
 
 export(PackedScene) var asteroid_scene
 export(AudioStream) var menu_music
-export(AudioStream) var game_over
+export(AudioStream) var game_overMusic
 export(AudioStream) var one_life
 export(AudioStream) var two_lives
 export(AudioStream) var three_lives
 
 
-
 var score
 var lives
+var gamedata
+var highscore
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,9 +20,11 @@ func _ready():
 
 func new_game():
 	score = 0
-	lives = 3
+	lives = 1
+	get_tree().call_group("mobs", "queue_free")
 	$Player.start()
 	$StartTimer.start()
+	$AsteroidTimer.set_paused(false)
 	$HUD.start_message("Get Ready")
 	$MusicController.stream = three_lives
 	$MusicController.play()
@@ -31,14 +34,13 @@ func new_game():
 func _on_AsteroidTimer_timeout():
 	add_child(asteroid_scene.instance())
 
-
 func _on_StartTimer_timeout():
 	$AsteroidTimer.start()
 
 func _on_Player_hit():
 	lives -= 1
 	if (lives == 0):
-		pass
+		game_over()
 	elif (lives == 2):
 		$MusicController.stream = two_lives
 		$MusicController.play()
@@ -48,3 +50,29 @@ func _on_Player_hit():
 	
 	$HUD.update_lives(lives)
 
+func game_over():
+	$MusicController.stream = game_overMusic
+	$MusicController.play()
+	$AsteroidTimer.set_paused(true)
+	get_tree().call_group("asteroids", "queue_free")
+	$Player.game_over()
+	$HUD.game_over(score)
+
+
+
+var score_file = "user://game.dat"
+func _save_score(n):    
+	var file = File.new()
+	file.open(score_file, File.WRITE)
+	file.store_var(n)
+	file.close()
+	
+func _get_score():
+	var file = File.new()
+	if file.file_exists(score_file):
+		file.open(score_file, File.READ)
+		var temp = file.get_var()
+		file.close()
+		return temp
+	else:
+		return 0

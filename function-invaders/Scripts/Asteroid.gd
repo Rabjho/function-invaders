@@ -17,8 +17,7 @@ const e = 2.7182818284590452353602874713527
 func _ready():
 	screenSize = get_viewport().size
 	$AnimatedSprite.frame = randi() % $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
-	type = randi() % 1
-	type = 3
+	type = randi() % 4
 	startPos = Vector2(0, randi() % int(screenSize.y))
 	endPos = Vector2 (screenSize.x, randi() % int(screenSize.y))
 	position = startPos

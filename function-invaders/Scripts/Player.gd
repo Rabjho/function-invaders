@@ -48,6 +48,8 @@ func start():
 func _on_Player_body_entered(body):
 	emit_signal("hit")
 
-func _died():
+func game_over():
 	$CollisionPolygon2D.set_deferred("disabled", true)
 	hide()
+
+
