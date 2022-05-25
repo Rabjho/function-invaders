@@ -49,10 +49,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -218.0
-margin_top = -34.5
-margin_right = 218.0
-margin_bottom = 34.5
+margin_left = -256.0
+margin_top = -34.0
+margin_right = 256.0
+margin_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
 hint_tooltip = "Press me to start the game"
@@ -112,6 +112,54 @@ margin_right = -20.0
 margin_bottom = 84.0
 text = "LIVES:"
 fit_content_height = true
+
+[node name="GameOverScore" type="RichTextLabel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -192.0
+margin_top = 200.0
+margin_right = 169.0
+margin_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+bbcode_text = "Score"
+text = "Score"
+fit_content_height = true
+scroll_active = false
+
+[node name="GameOverHighscore" type="RichTextLabel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -192.0
+margin_top = 248.0
+margin_right = 192.0
+margin_bottom = 312.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+bbcode_text = "Highscore"
+text = "Highscore"
+fit_content_height = true
+scroll_active = false
+
+[node name="EndMessage" type="RichTextLabel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -150.0
+margin_right = 400.0
+margin_bottom = -150.0
+bbcode_enabled = true
+bbcode_text = "[center]Better luck next time[/center]"
+text = "Better luck next time"
+fit_content_height = true
+scroll_active = false
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]

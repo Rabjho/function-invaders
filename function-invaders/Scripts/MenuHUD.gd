@@ -22,6 +22,9 @@ func start_message(text):
 	$StartMessage.text = text
 	$StartTimer.start()
 	$TitleLabel.hide()
+	$EndMessage.hide()
+	$GameOverHighscore.hide()
+	$GameOverScore.hide()
 
 func update_score(score):
 	$ScoreLabel.text = "SCORE: " + str(score)
@@ -32,13 +35,24 @@ func update_type(type):
 func update_lives(lives):
 	$LivesLabel.text = "LIVES: " + str(lives)
 
-func game_over(score):
+func game_over(score, highscore):
 	$FunctionLabel.hide()
 	$ScoreLabel.hide()
 	$LivesLabel.hide()
-
-
-
+	$GameOverScore.show()
+	$GameOverScore.bbcode_text = "Score: " + str(score)
+	$GameOverHighscore.show()
+	$GameOverHighscore.bbcode_text = "Highscore: " + str(highscore)
+	$EndMessage.show()
+	if (score > highscore):
+		$EndMessage.bbcode_text = "[center]%s[/center]" % "You beat the highscore ggwp"
+	elif (score == highscore):
+		$EndMessage.bbcode_text = "[center]%s[/center]" % "You matched the highscore!"
+	else:
+		$EndMessage.bbcode_text = "[center]%s[/center]" % "Better luck next time!"
+	$StartButton.show()
+	$StartButton.text = "Restart the game"
+		
 func _on_StartTimer_timeout():
 	$StartMessage.hide()
 	$ScoreLabel.show()

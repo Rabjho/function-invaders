@@ -20,8 +20,8 @@ func _ready():
 
 func new_game():
 	score = 0
-	lives = 1
-	get_tree().call_group("mobs", "queue_free")
+	lives = 3
+	get_tree().call_group("asteroids", "queue_free")
 	$Player.start()
 	$StartTimer.start()
 	$AsteroidTimer.set_paused(false)
@@ -32,7 +32,9 @@ func new_game():
 
 
 func _on_AsteroidTimer_timeout():
-	add_child(asteroid_scene.instance())
+	var asteroid = asteroid_scene.instance()
+	$Asteroids.add_child(asteroid)
+	asteroid.connect("score", self, "_update_score")
 
 func _on_StartTimer_timeout():
 	$AsteroidTimer.start()
@@ -56,7 +58,14 @@ func game_over():
 	$AsteroidTimer.set_paused(true)
 	get_tree().call_group("asteroids", "queue_free")
 	$Player.game_over()
-	$HUD.game_over(score)
+	highscore = _get_score()
+	if (score > highscore):
+		_save_score(score)
+	$HUD.game_over(score, highscore)
+
+func _update_score():
+	score += 1
+	$HUD.update_score(score)
 
 
 

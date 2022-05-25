@@ -10,6 +10,8 @@ var a
 var b
 var c
 var d
+var hit = false
+signal score
 
 const e = 2.7182818284590452353602874713527
 
@@ -57,3 +59,10 @@ func _process(delta):
 	if (type == 3):
 		position.y = a * sin(b * position.x - c) + d
 	
+	if (position.x - $CollisionShape2D.shape.radius > screenSize.x and not hit):
+		emit_signal("score")
+		queue_free()
+		
+func _is_hit():
+	hit = true
+		

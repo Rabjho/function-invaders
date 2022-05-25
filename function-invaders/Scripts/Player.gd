@@ -47,6 +47,8 @@ func start():
 
 func _on_Player_body_entered(body):
 	emit_signal("hit")
+	if ("asteroids" in body.get_groups()):
+		body._is_hit()
 
 func game_over():
 	$CollisionPolygon2D.set_deferred("disabled", true)

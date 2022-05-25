@@ -34,8 +34,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=10]
 radius = 36.0555
 
-[node name="RigidBody2D" type="RigidBody2D" groups=["asteroids"]]
-position = Vector2( 1672, 384 )
+[node name="Asteroid" type="RigidBody2D" groups=["asteroids"]]
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource( 2 )
