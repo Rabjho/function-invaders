@@ -17,18 +17,21 @@ var highscore
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	$MusicController.volume_db = -2
 
 func new_game():
+	get_tree().call_group("asteroids", "queue_free")
 	score = 0
 	lives = 3
-	get_tree().call_group("asteroids", "queue_free")
 	$Player.start()
 	$StartTimer.start()
 	$AsteroidTimer.set_paused(false)
 	$HUD.start_message("Get Ready")
+	$MusicController.volume_db = -4
 	$MusicController.stream = three_lives
 	$MusicController.play()
 	$HUD.update_lives(lives)
+	$HUD.update_score(score)
 
 
 func _on_AsteroidTimer_timeout():
@@ -44,9 +47,11 @@ func _on_Player_hit():
 	if (lives == 0):
 		game_over()
 	elif (lives == 2):
+		$MusicController.volume_db = 0
 		$MusicController.stream = two_lives
 		$MusicController.play()
 	elif (lives == 1):
+		$MusicController.volume_db = -6
 		$MusicController.stream = one_life
 		$MusicController.play()
 	
@@ -54,6 +59,7 @@ func _on_Player_hit():
 
 func game_over():
 	$MusicController.stream = game_overMusic
+	$MusicController.volume_db = -2
 	$MusicController.play()
 	$AsteroidTimer.set_paused(true)
 	get_tree().call_group("asteroids", "queue_free")

@@ -87,9 +87,11 @@ one_shot = true
 visible = false
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 300.0
-text = "Score: 0"
-fit_content_height = true
+margin_right = 392.0
+margin_bottom = 84.0
+bbcode_enabled = true
+bbcode_text = "Score: 3"
+text = "Score: 3"
 scroll_active = false
 
 [node name="FunctionLabel" type="RichTextLabel" parent="."]
@@ -99,19 +101,22 @@ anchor_right = 0.5
 margin_left = -496.0
 margin_top = 20.0
 margin_right = 428.0
-text = "Current functiontype: "
+bbcode_enabled = true
 fit_content_height = true
 
 [node name="LivesLabel" type="RichTextLabel" parent="."]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -448.0
+margin_left = -432.0
 margin_top = 20.0
 margin_right = -20.0
 margin_bottom = 84.0
-text = "LIVES:"
-fit_content_height = true
+grow_horizontal = 0
+grow_vertical = 0
+bbcode_enabled = true
+bbcode_text = "[right]LIVES: 3[/right]"
+text = "LIVES: 3"
 
 [node name="GameOverScore" type="RichTextLabel" parent="."]
 visible = false

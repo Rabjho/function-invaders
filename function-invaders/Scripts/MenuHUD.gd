@@ -27,13 +27,13 @@ func start_message(text):
 	$GameOverScore.hide()
 
 func update_score(score):
-	$ScoreLabel.text = "SCORE: " + str(score)
+	$ScoreLabel.bbcode_text = "SCORE: %s" % str(score)
 
 func update_type(type):
-	$FunctionLabel.text = "Latest type: " + str(type)
+	$FunctionLabel.bbcode_text = "Latest type: %s" % str(type)
 
 func update_lives(lives):
-	$LivesLabel.text = "LIVES: " + str(lives)
+	$LivesLabel.bbcode_text = "[right]LIVES: %s[/right]" % str(lives)
 
 func game_over(score, highscore):
 	$FunctionLabel.hide()
@@ -56,7 +56,7 @@ func game_over(score, highscore):
 func _on_StartTimer_timeout():
 	$StartMessage.hide()
 	$ScoreLabel.show()
-	$FunctionLabel.show()
+#	$FunctionLabel.show()
 	$LivesLabel.show()
 	
 
