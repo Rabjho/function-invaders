@@ -1,20 +1,17 @@
 extends Area2D
 
-export(PackedScene) var bullet_scene
 
 export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 
-signal hit
+export(PackedScene) var bullet_scene
+export(PackedScene) var explosion_scene
+signal player_hit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport().size
 	rotation -= PI / 2 
-	
-func _move(target):
-	$Tween.interpolate_property(self, "position", position, target, 3, Tween.TRANS_CUBIC, Tween.EASE_OUT_IN)
-	$Tween.start()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -34,24 +31,34 @@ func _process(delta):
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
-func _input(event):
-	if (Input.is_action_just_pressed("shoot_bullet") and $ShootCooldown.time_left == 0):
+func _input(_event):
+	if (Input.is_action_just_pressed("shoot_bullet") and $ShootCooldown.time_left == 0 and visible):
 		$ShootCooldown.start()
-		add_child(bullet_scene.instance())
+		var bullet = bullet_scene.instance()
+		bullet.position = position
+		bullet.rotation = rotation
+		owner.add_child(bullet)
+
 
 
 func start():
 	position = Vector2(screen_size.x * 9/10, screen_size.y / 2);
 	show()
+	get_tree().call_group("particles", "hide")
+
 	$CollisionPolygon2D.disabled = false
 
+
 func _on_Player_body_entered(body):
-	emit_signal("hit")
 	if ("asteroids" in body.get_groups()):
+		emit_signal("player_hit")
 		body._is_hit()
+		var explosion = explosion_scene.instance()
+		add_child(explosion)
+		explosion.global_position = body.position
 
 func game_over():
 	$CollisionPolygon2D.set_deferred("disabled", true)
 	hide()
-
+	
 

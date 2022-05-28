@@ -11,5 +11,5 @@ dest_files=[ "res://.import/LaserSkud.ogg-c7226a6e0ff7fd16360857dd6cb2989d.oggst
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

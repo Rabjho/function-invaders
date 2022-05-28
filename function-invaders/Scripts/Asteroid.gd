@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+export(PackedScene) var explosion_scene
 
 export(float) var speed = 400
 var type
@@ -10,7 +11,6 @@ var a
 var b
 var c
 var d
-var hit = false
 signal score
 
 const e = 2.7182818284590452353602874713527
@@ -20,7 +20,7 @@ func _ready():
 	screenSize = get_viewport().size
 	$AnimatedSprite.frame = randi() % $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
 	type = randi() % 4
-	startPos = Vector2(0, randi() % int(screenSize.y))
+	startPos = Vector2(0.00000001, randi() % int(screenSize.y))
 	endPos = Vector2 (screenSize.x, randi() % int(screenSize.y))
 	position = startPos
 
@@ -59,10 +59,18 @@ func _process(delta):
 	if (type == 3):
 		position.y = a * sin(b * position.x - c) + d
 	
-	if (position.x - $CollisionShape2D.shape.radius > screenSize.x and not hit):
-		emit_signal("score")
-		queue_free()
-		
+
 func _is_hit():
-	hit = true
-		
+	queue_free()
+	
+
+func _on_Asteroid_body_entered(body):
+	if ("bullets" in body.get_groups()):
+		emit_signal("score")
+		var explosion = explosion_scene.instance()
+		add_child(explosion)
+		explosion.connect("particles_ended", self, "_is_hit")
+		explosion.global_position = position
+		body.queue_free()
+		$AnimatedSprite.hide();
+		$CollisionShape2D.set_deferred("disabled", true)

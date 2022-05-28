@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Sprites/simpleSpace_tilesheet@2.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Asteroid.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Explosion.tscn" type="PackedScene" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -35,9 +36,15 @@ animations = [ {
 radius = 36.0555
 
 [node name="Asteroid" type="RigidBody2D" groups=["asteroids"]]
-collision_mask = 0
+collision_mask = 2
+mode = 3
 gravity_scale = 0.0
+custom_integrator = true
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 2 )
+explosion_scene = ExtResource( 3 )
+speed = 500.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.75, 0.75 )
@@ -47,5 +54,4 @@ animation = "asteroids"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 10 )
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-scale = Vector2( 1e-05, 1e-05 )
+[connection signal="body_entered" from="." to="." method="_on_Asteroid_body_entered"]

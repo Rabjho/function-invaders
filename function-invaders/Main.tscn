@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Assets/Sounds/Music/Abstraction/twolives.wav" type="AudioStream" id=8]
 [ext_resource path="res://Assets/Sounds/Music/Abstraction/onelife.wav" type="AudioStream" id=9]
 [ext_resource path="res://Assets/Sounds/Music/Dystopian/startscreen.wav" type="AudioStream" id=10]
+[ext_resource path="res://Scenes/Bullet.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Explosion.tscn" type="PackedScene" id=12]
 
 [node name="Node" type="Node"]
 script = ExtResource( 3 )
@@ -26,9 +28,11 @@ current = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 visible = false
+bullet_scene = ExtResource( 11 )
+explosion_scene = ExtResource( 12 )
 
 [node name="AsteroidTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 one_shot = true
 
 [node name="StartTimer" type="Timer" parent="."]
@@ -41,10 +45,11 @@ stream = ExtResource( 10 )
 autoplay = true
 
 [node name="Background" parent="." instance=ExtResource( 2 )]
+speed = 200.0
 
 [node name="Asteroids" type="Node" parent="."]
 
-[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
+[connection signal="player_hit" from="Player" to="." method="_on_Player_hit"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_AsteroidTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
