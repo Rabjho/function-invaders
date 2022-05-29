@@ -12,6 +12,7 @@ var b
 var c
 var d
 signal score
+signal player_hit
 
 const e = 2.7182818284590452353602874713527
 
@@ -20,8 +21,8 @@ func _ready():
 	screenSize = get_viewport().size
 	$AnimatedSprite.frame = randi() % $AnimatedSprite.frames.get_frame_count($AnimatedSprite.animation)
 	type = randi() % 4
-	startPos = Vector2(0.00000001, randi() % int(screenSize.y))
-	endPos = Vector2 (screenSize.x, randi() % int(screenSize.y))
+	startPos = Vector2(0, rand_range(0.00000001, screenSize.y))
+	endPos = Vector2(screenSize.x, rand_range(0.00000001, screenSize.y))
 	position = startPos
 
 
@@ -60,17 +61,20 @@ func _process(delta):
 		position.y = a * sin(b * position.x - c) + d
 	
 
-func _is_hit():
-	queue_free()
-	
-
 func _on_Asteroid_body_entered(body):
 	if ("bullets" in body.get_groups()):
 		emit_signal("score")
-		var explosion = explosion_scene.instance()
-		add_child(explosion)
-		explosion.connect("particles_ended", self, "_is_hit")
-		explosion.global_position = position
+		_explode()
 		body.queue_free()
-		$AnimatedSprite.hide();
-		$CollisionShape2D.set_deferred("disabled", true)
+	if ("player" in body.get_groups()):
+		emit_signal("player_hit")
+		_explode()
+
+
+func _explode():
+	var explosion = explosion_scene.instance()
+	add_child(explosion)
+	$AudioStreamPlayer2D.play()
+	$AnimatedSprite.hide()
+	explosion.connect("particles_ended", self, "queue_free")
+	$CollisionShape2D.set_deferred("disabled", true)

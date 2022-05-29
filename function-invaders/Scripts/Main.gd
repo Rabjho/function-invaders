@@ -12,9 +12,10 @@ export(AudioStream) var three_lives
 
 var score
 var lives
+var lives_lost
 var gamedata
 var highscore
-
+var score_offset = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -24,9 +25,11 @@ func new_game():
 	get_tree().call_group("asteroids", "queue_free")
 	score = 0
 	lives = 3
+	lives_lost = 0
 	$Player.start()
 	$StartTimer.start()
 	$AsteroidTimer.set_paused(false)
+	$AsteroidTimer.wait_time = 2
 	$HUD.start_message("Get Ready")
 	$MusicController.volume_db = -10
 	$MusicController.stream = three_lives
@@ -39,12 +42,14 @@ func _on_AsteroidTimer_timeout():
 	var asteroid = asteroid_scene.instance()
 	$Asteroids.add_child(asteroid)
 	asteroid.connect("score", self, "_update_score")
+	asteroid.connect("player_hit", self, "_on_Player_hit")
 
 func _on_StartTimer_timeout():
 	$AsteroidTimer.start()
 
 func _on_Player_hit():
 	lives -= 1
+	lives_lost += 1
 	if (lives == 0):
 		game_over()
 	elif (lives == 2):
@@ -57,8 +62,12 @@ func _on_Player_hit():
 		$MusicController.play()
 	
 	$HUD.update_lives(lives)
+	score_offset = score
+	_update_difficulty()
 
-
+func _update_difficulty():
+	$AsteroidTimer.wait_time = clamp(2 * pow(0.9, score - score_offset), 0.6, INF)
+	print($AsteroidTimer.wait_time)
 
 func game_over():
 	$MusicController.stream = game_overMusic
@@ -77,7 +86,7 @@ func game_over():
 func _update_score():
 	score += 1
 	$HUD.update_score(score)
-
+	_update_difficulty()
 
 
 var score_file = "user://game.dat"
