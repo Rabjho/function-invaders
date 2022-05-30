@@ -7,7 +7,9 @@ export var deceleration = 7000
 var screen_size # Size of the game window.
 var velocity = Vector2.ZERO
 var direction
+var InvincibilityTween
 
+export(PackedScene) var invin_tween_sceen 
 export(PackedScene) var bullet_scene
 
 # Called when the node enters the scene tree for the first time.
@@ -34,7 +36,7 @@ func _process(delta):
 	velocity += acceleration * direction * delta
 	velocity = velocity.clamped(speed)
 	position += velocity * delta
-		
+	
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
@@ -45,16 +47,24 @@ func _process(delta):
 		bullet.rotation = rotation
 		owner.add_child(bullet)
 
+func invincibleStart():
+	# Make modulate go blinky
+	$InvincibilityTween.interpolate_property(self, "modulate", Color(1,1,1,0), Color(1,1,1,1), $InvincibilityCooldown.wait_time, Tween.TRANS_BOUNCE, Tween.EASE_OUT_IN)
+	$InvincibilityTween.start()
 
 
 func start():
 	position = Vector2(screen_size.x * 9/10, screen_size.y / 2);
 	show()
+	$InvincibilityTween.stop_all()
+	modulate = Color(1,1,1,1)
+	$Trail.restart()
 	$CollisionPolygon2D.disabled = false
 
 
 func game_over():
 	$CollisionPolygon2D.set_deferred("disabled", true)
+	$InvincibilityCooldown.stop()
 	hide()
 	
 

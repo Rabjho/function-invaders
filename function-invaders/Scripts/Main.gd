@@ -22,14 +22,15 @@ func _ready():
 	$MusicController.volume_db = -8
 
 func new_game():
+	print("game start")
 	get_tree().call_group("asteroids", "queue_free")
 	score = 0
+	score_offset = 0
 	lives = 3
 	lives_lost = 0
 	$Player.start()
 	$StartTimer.start()
-	$AsteroidTimer.set_paused(false)
-	$AsteroidTimer.wait_time = 2
+	_update_difficulty()
 	$HUD.start_message("Get Ready")
 	$MusicController.volume_db = -10
 	$MusicController.stream = three_lives
@@ -45,38 +46,45 @@ func _on_AsteroidTimer_timeout():
 	asteroid.connect("player_hit", self, "_on_Player_hit")
 
 func _on_StartTimer_timeout():
+	$AsteroidTimer.one_shot = false
 	$AsteroidTimer.start()
 
+
 func _on_Player_hit():
-	lives -= 1
-	lives_lost += 1
-	if (lives == 0):
-		game_over()
-	elif (lives == 2):
-		$MusicController.volume_db = -6
-		$MusicController.stream = two_lives
-		$MusicController.play()
-	elif (lives == 1):
-		$MusicController.volume_db = -12
-		$MusicController.stream = one_life
-		$MusicController.play()
-	
-	$HUD.update_lives(lives)
-	score_offset = score
+	if ($Player/InvincibilityCooldown.time_left == 0):
+		lives -= 1
+		lives_lost += 1
+		if (lives == 0):
+			game_over()
+		elif (lives == 2):
+			$MusicController.volume_db = -6
+			$MusicController.stream = two_lives
+			$MusicController.play()
+		elif (lives == 1):
+			$MusicController.volume_db = -12
+			$MusicController.stream = one_life
+			$MusicController.play()
+
+		$Player/InvincibilityCooldown.start()
+		$Player.invincibleStart()
+		$HUD.update_lives(lives)
+		score_offset = score
 	_update_difficulty()
 
 func _update_difficulty():
 	$AsteroidTimer.wait_time = clamp(2 * pow(0.9, score - score_offset), 0.6, INF)
-	print($AsteroidTimer.wait_time)
+
 
 func game_over():
+	print("game over")
 	$MusicController.stream = game_overMusic
 	$MusicController.volume_db = -8
 	$MusicController.play()
-	$AsteroidTimer.set_paused(true)
+	$AsteroidTimer.one_shot = true
+	$AsteroidTimer.stop()
+	$AsteroidTimer.is_stopped()
 	get_tree().call_group("asteroids", "queue_free")
 	get_tree().call_group("bullets", "queue_free")
-
 	$Player.game_over()
 	highscore = _get_score()
 	if (score > highscore):

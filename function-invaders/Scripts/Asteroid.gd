@@ -25,8 +25,6 @@ func _ready():
 	endPos = Vector2(screenSize.x, rand_range(0.00000001, screenSize.y))
 	position = startPos
 
-
-
 	if (type == 0):
 		b = startPos.y
 		a = (endPos.y - b) / endPos.x
@@ -39,7 +37,7 @@ func _ready():
 		a = pow(e,log(endPos.y / startPos.y) / endPos.x)
 	if (type == 3):
 		var ampFraction = 10
-		var freqFraction = 400000
+		var freqFraction = 1000000
 
 		a = rand_range(screenSize.y * 1 / ampFraction, screenSize.y / 4)
 		b = rand_range(screenSize.x * 1 / freqFraction, screenSize.x * 3 / freqFraction)

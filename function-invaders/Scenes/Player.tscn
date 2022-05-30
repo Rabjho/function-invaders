@@ -1,8 +1,21 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Sprites/simpleSpace_tilesheet@2.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Bullet.tscn" type="PackedScene" id=3]
+
+[sub_resource type="PackedScene" id=13]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "InvincibilityTween", "Tween" ),
+"node_count": 1,
+"node_paths": [  ],
+"nodes": PoolIntArray( -1, -1, 1, 0, -1, 0, 0 ),
+"variants": [  ],
+"version": 2
+}
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
@@ -74,6 +87,7 @@ hue_variation_random = 0.06
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision_layer = 5
 script = ExtResource( 2 )
+invin_tween_sceen = SubResource( 13 )
 bullet_scene = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -83,8 +97,6 @@ frames = SubResource( 1 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
 polygon = PoolVector2Array( 0, -40, 40, 40, -40, 40 )
-
-[node name="Tween" type="Tween" parent="."]
 
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.4
@@ -98,3 +110,9 @@ lifetime = 0.2
 preprocess = 1.0
 local_coords = false
 process_material = SubResource( 10 )
+
+[node name="InvincibilityCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="InvincibilityTween" type="Tween" parent="."]
